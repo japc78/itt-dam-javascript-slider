@@ -1,0 +1,326 @@
+// Reset
+	html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, hgroup, menu, nav, section, time, mark, audio, video { margin : 0; padding : 0; border : 0; outline : 0; font-size : 100%; vertical-align : baseline; background : transparent; }
+
+	article, aside, figure, footer, header, hgroup, nav, section { display : block; }
+
+	table {	border-collapse: collapse;
+		border-spacing: 0;
+		width: 100%;}
+
+	fieldset, img, abbr, acronym {
+		border: 0;}
+
+	address,caption,cite,code,dfn,th,var {
+		font-style: normal;
+		font-weight: normal;}
+
+	ol,ul {
+		list-style: none;}
+
+	caption,th {
+		text-align: left;}
+
+	h1,h2,h3,h4,h5,h6 {
+		font-family: serif;
+		font-size: 1rem;
+		font-size: 100%;
+		font-weight: normal;}
+
+	a {outline: none;}
+
+	* {-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+
+
+// Variables
+	//Colores del Proyecto
+	$color1 			: #32C5D8;
+	$color1dark 		: darken($color1,5);
+	$color1darken       : darken($color1,20);
+	$color1darkenplus   : darken($color1,30);
+	$color1light 	 	: lighten($color1,5);
+	$color1lighter 	 	: lighten($color1,10);
+	$color1lighterplus 	: lighten($color1,20);
+
+	// Negro y escala de grises
+	$black 			: rgb(0,0,0);
+	$darkengrey 	: lighten($black, 10%);
+	$darkgrey 		: lighten($black, 25%);
+	$grey 			: lighten($black, 50%);
+	$lightgrey 		: lighten($black, 75%);
+	$lightergrey 	: lighten($black, 90%);
+	$lightergreyplus: lighten($black, 95%);
+	$white 			: rgb(255,255,255);
+
+	// Margenes y padding
+	$generalPadding: 1rem;
+	$generalMargin: 1rem;
+
+// Stylos
+	body {
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 18px;
+		overflow: hidden;
+	}
+
+	.slider-itt {
+		position: relative;
+		height: 100vh;
+		width: 100vw;
+
+		.images {
+			height: 100vh;
+			width: 100vw;
+			opacity: 0;
+			transition: opacity 2s ease-in-out, width .5s ease-in-out, height .5s ease-in-out;
+			// border:1px solid red;
+			position: absolute;
+			top:0;
+			left:0;
+
+			.tit {
+				font-family: 'Montserrat', sans-serif;
+				position: absolute;
+				display: block;
+				top: 50px;
+				font-weight: lighter;
+				color:$white;
+				font-size:1.5rem;
+				// text-shadow: 1px 2px 3px rgba($black,.5);
+				transition: all .5s ease-in-out;
+				opacity: 0;
+				padding: 15px;
+				background-color: rgba($black,.35);
+			}
+
+			&:nth-of-type(odd) {
+				.tit {
+					left:0;
+				}
+			}
+
+			&:nth-of-type(even) {
+				.tit {
+					right:0;
+				}
+			}
+
+			&.active {
+				opacity: 1;
+				&:nth-of-type(odd) {
+					.tit {
+						left:50px;
+						opacity: 1;
+					}
+				}
+
+				&:nth-of-type(even) {
+					.tit {
+						right:50px;
+						opacity: 1;
+					}
+				}
+			}
+		}
+
+		img {
+			//border:1px solid red;
+			display: block;
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+			object-position: center center;
+			background: transparent;
+			transition: all .5s ease-in-out;
+		}
+
+		.prev, .next {
+			position: absolute;
+			z-index: 99999;
+			top: 50%;
+			transform: translateY(-50%);
+			border: 0;
+			background: rgba($color1,.8);
+			width: 75px;
+			height: 75px;
+			border-radius: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			opacity: 0;
+			transition: all .5s ease-in-out;
+			cursor: pointer;
+
+			span {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				position: absolute;
+				z-index: -1;
+				opacity: 0;
+				transition: all .5s ease-in-out;
+				img {
+					opacity: 0;
+				}
+			}
+
+			&:hover {
+				background-color: $color1darken;
+				[class*="icono"] {
+					color:rgba($white,.95)
+				}
+			}
+		}
+
+		.prev {
+			left: -150px;
+			span {
+				right: 0;
+			}
+			&:hover {
+				span {
+					right: -75px;
+					opacity: 1;
+					img {
+						opacity: 1;
+					}
+				}
+			}
+		}
+
+		.next {
+			right: -150px;
+			span {
+				left: 0;
+			}
+			&:hover {
+				span {
+					left: -75px;
+					opacity: 1;
+					img {
+						opacity: 1;
+					}
+				}
+			}
+		}
+
+		// Iconos -> https://codepen.io/saeedalipoor/pen/NPyeog
+		[class*="arrow"] {
+			position: relative;
+			display: inline-block;
+			vertical-align: middle;
+			color: $color1lighterplus;
+			box-sizing: border-box;
+			width: 20px;
+			height: 20px;
+			border-width: 4px 4px 0 0;
+			border-style: solid;
+			margin: 10px;
+			transition: all .5s ease-in-out;
+
+			&:after, &:before {
+			  content: "";
+			  box-sizing: border-box;
+			}
+
+			&:before{
+				right: 0;
+				top: -3px;
+				position: absolute;
+				height: 4px;
+				box-shadow: inset 0 0 0 32px;
+				transform: rotate(-45deg);
+				width: 23px;
+				transform-origin: right top;
+			}
+
+			&[class*="-left"]{
+			  	transform: rotate(45deg);
+			}
+
+			&[class*="-right"]{
+				transform: rotate(-135deg);
+			}
+		}
+
+		.dots {
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			bottom: -150px;
+			display: flex;
+			// border:1px solid red;
+			width: 100%;
+			justify-content: center;
+			transition: all .5s ease-in-out;
+			opacity:0;
+
+			li {
+				width: 18px;
+				height: 18px;
+				background: $white;
+				transition: all .5s ease-in-out;
+				margin:0 5px;
+				border-radius: 100%;
+				cursor: pointer;
+				border:1px solid transparent;
+
+				span {
+					$size: 100px;
+					display:block;
+					width:$size;
+					height: $size;
+					overflow: hidden;
+					border-radius: 100%;
+					position: absolute;
+					top: -125px;
+					left: 0;
+					right: 0;
+					margin: 0 auto;
+					transition: all .5s ease-in-out;
+					transform: scale(1);
+					opacity: 0;
+					border:2px solid $color1lighter;
+					// transform: scale(0), translateX(50%);
+				}
+
+				&.active {
+					background-color: $color1darken;
+					transform: scale(1.6);
+					border:1px solid $color1darkenplus;
+					cursor: default;
+					span {
+						display: none;
+					}
+				}
+
+				&:hover{
+					background-color: $color1lighterplus;
+					// transform: scale(1.6);
+					border:1px solid $color1;
+					span {
+						transform: scale(1.2);
+						// top: -125px;
+						opacity: 1;
+					}
+				}
+			}
+		}
+
+		&:hover {
+			.next, .prev, .dots {
+				opacity:1;
+			}
+
+			.next {
+				right: 50px;
+			}
+
+			.prev {
+				left: 50px;
+			}
+
+			.dots {
+				bottom: 50px;
+			}
+		}
+	}
